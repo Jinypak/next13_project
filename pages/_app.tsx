@@ -2,7 +2,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { ThemeProvider, DefaultTheme } from "styled-components";
 import GlobalStyle from "../globalstyles";
-import Header from "@/components/header";
+import Header from "@/components/Header";
 
 const theme: DefaultTheme = {
   primary: "#040714",
