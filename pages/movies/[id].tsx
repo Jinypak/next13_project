@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import { MovieListType } from '@/types/MovieList';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import FilmsLayout from '@/components/FilmsLayout';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { ParsedUrlQuery } from 'querystring';
+import React, { useEffect } from 'react';
+import FilmsLayout from '../../components/FilmsLayout';
+import { MovieListType } from '../../types/MovieList';
 
 interface Props {
   movieResults: MovieListType;
@@ -42,11 +43,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
+interface IParams extends ParsedUrlQuery {
+  id: string;
+}
+
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params as { id: string };
+  const { id } = context.params as IParams;
 
   const movieResults = await fetch(
-    `https://movies-api-wine.vercel.app/api/movie/${id}`
+    `https://movies-api-wine.vercel.app/api/movies/${id}`
   ).then((res) => res.json());
 
   return {
