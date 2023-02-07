@@ -3,8 +3,14 @@ import HomeLayout from '@/components/HomeLayout';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { MovieListType } from '@/types/MovieList';
+import { GetServerSideProps } from 'next';
 
-export default function Home() {
+interface Props {
+  movieResults: MovieListType[];
+}
+
+export default function Home({ movieResults }: Props) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -19,6 +25,7 @@ export default function Home() {
 
   if (status === 'loading') return <p>Loading...</p>;
 
+  // @ts-ignore
   return (
     <>
       <Head>
@@ -27,7 +34,19 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <HomeLayout />
+      <HomeLayout movieResults={movieResults} />
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const movieResults = await fetch(
+    'https://movies-api-wine.vercel.app/api/movie'
+  ).then((res) => res.json());
+
+  return {
+    props: {
+      movieResults,
+    },
+  };
+};
