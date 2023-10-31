@@ -18,3 +18,10 @@
 - trunk 설치
 - marketing page 작업
 - darkmode 적용 진행 중
+
+#### 2023-10-30
+
+- darkmode 적용 완료
+- Layout 다크모드 토글 적용
+- convex 적용
+- clerk 인증 적용 및 로그인 화면 구현
